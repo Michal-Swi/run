@@ -6,4 +6,3 @@ struct Result {
 	public: Ok<T> ok;
 	public: Error error;
 };
-
