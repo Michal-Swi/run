@@ -2,9 +2,9 @@
 #include <iostream>
 
 int main() {
-	Lexer l;	
-
-	std::cout << std::boolalpha << l.is_whitespace(' ') << std::endl;
+	Lexer l;
+	l.tokenize("file");
+	l.print();
 
 	return 0;
 }

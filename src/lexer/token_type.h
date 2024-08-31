@@ -1,6 +1,8 @@
 enum TokenType {
-	Word,
-	Number,
+	IntegerLiteral,
+	StringLiteral,
+	FloatLiteral,
 	Operator,
 	KeyWord,
+	Variable,
 };
