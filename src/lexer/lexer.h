@@ -98,10 +98,10 @@ class Lexer {
 				}
 
 				for (; !is_whitespace(str[i]); i++) {
-					if (token.token_type == KeyWord and !is_letter(str[i])) {
+					if (token.token_type == TokenType::KeyWord and !is_letter(str[i])) {
 						i--;
 						break;
-					} else if (token.token_type == Operator and !is_operator(str[i])) {
+					} else if (token.token_type == TokenType::Operator and !is_operator(str[i])) {
 						i--;
 						break;
 					}
@@ -158,3 +158,4 @@ class Lexer {
 
 	
 };
+

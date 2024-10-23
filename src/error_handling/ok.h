@@ -1,4 +1,3 @@
-
 template <class T>
 class Ok {
 	private: T val;
