@@ -1,6 +1,7 @@
 #include <iostream>
 #include <optional>
 #include "./error_handling/result.h"
+#include <cstddef>
 
 auto func() -> Result<int> {
 	Result<int> res;
@@ -12,6 +13,8 @@ auto func() -> Result<int> {
 int main() {
 	Result<int> result = func();
 
-	std::cout << result.ok.value() << std::endl;
+	std::optional<double> n;
+
+	std::cout << n.has_value() << std::endl;
 }
 
