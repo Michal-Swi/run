@@ -23,6 +23,7 @@ class OperationsHelperFunctions {
 		}
 		
 		char ch = static_cast<char>(s[0]);
+
 		switch (ch) {
 			case Operations::plus:	
 				result.ok.set_value(Operations::plus);
