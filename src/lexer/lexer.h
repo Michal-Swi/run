@@ -138,10 +138,12 @@ class Lexer {
 
 			if (is_operator(first_letter)) {
 				tokens.push_back(tokenize(std::string(1, first_letter), TokenType::Operator));
+				continue;
 			}
 			
 			if (first_letter == ';') {
 				tokens.push_back(tokenize(std::string(1, first_letter), TokenType::EOW));
+				continue;
 			}
 			
 			if (std::isalpha(first_letter)) {
@@ -153,11 +155,14 @@ class Lexer {
 				} else {
 					tokens.push_back(tokenize(word, TokenType::Identifier));
 				}
+
+				continue;
 			}
 
 			if (std::isdigit(first_letter)) {
 				std::string word = get_next_number(first_letter, i);
 				tokens.push_back(tokenize(word, TokenType::Number));
+				continue;
 			}
 		}
 	}
