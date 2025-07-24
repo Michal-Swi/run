@@ -2,7 +2,7 @@
 #include <string>
 
 // Macro hell (modern C++ friendly) 
-// here so that I do not use "" strings
+// it exists so that I do not use "" strings
 // Also group erros by type e.g. SyntaxErrors, FileErrors, etc.
 inline constexpr const char* _TemplateError = "TemplateError";
 
