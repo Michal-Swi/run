@@ -26,12 +26,15 @@ inline constexpr const char* InternalLexerErrorIteratorOverflow = "Internal Lexe
 // return error_message
 //
 // Also, group errors
+
+/*
 class template_error : public std::exception {
 	public:
 	const char* what() const noexcept override {
 		return "";
 	}
 };
+*/
 
 enum class InternalLexerErrors {
 	IteratorOverflow,
