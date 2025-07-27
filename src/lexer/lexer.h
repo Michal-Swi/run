@@ -1,4 +1,5 @@
 #include <cctype>
+#include <unordered_map>
 #include <cstddef>
 #include <fstream>
 #include <ios>
@@ -7,7 +8,6 @@
 #include <string>
 #include <vector>
 #include "token.h"
-#include "expression_types.h"
 #include "../errors/errors.h"
 
 class Lexer {
@@ -17,13 +17,18 @@ class Lexer {
 	std::string file_literal;
 	std::unordered_set<char> operators;
 	std::unordered_set<std::string> key_words;
+	std::unordered_map<std::string, TokenType> two_character_operators;
 
 	public:
 	Lexer() {
 		operators = {'+', '-', '*', '/', 
-							'<', '>', '='};
+							'<', '>', '=', '(', ')'};
 
 		key_words = {"let", "if", "for", "fn"}; 
+		
+		two_character_operators[">="] = TokenType::GreaterEqual;
+		two_character_operators["<="] = TokenType::LesserEqual;
+		two_character_operators["=="] = TokenType::IsEqualTo;
 	}
 
 	private:
@@ -122,6 +127,71 @@ class Lexer {
 		return operators.find(ch) != operators.end();
 	}
 
+	private:
+	TokenType match_one_character_operator(const char &ch) {
+		switch (ch) {
+			case '=':
+				return TokenType::EqualSign;
+			case '+':
+				return TokenType::Plus;
+			case '-':
+				return TokenType::Minus;
+			case '*':
+				return TokenType::Times;
+			case '/':
+				return TokenType::Divide;
+			case '>':
+				return TokenType::Greater;
+			case '<':
+				return TokenType::Lesser;
+			case '(':
+				return TokenType::OpenParentheses;
+			case ')':
+				return TokenType::CloseParentheses;
+		}
+		
+		std::string error(1, ch);
+		error += " is not a valid token";
+		throw bad_token(error);
+	}
+
+	private:
+	TokenType match_two_character_operator(const std::string &full_operator) {
+		if (two_character_operators.find(full_operator) != two_character_operators.end()) {
+			return two_character_operators.at(full_operator);
+		}
+
+		throw bad_token();
+	}
+
+	private:
+	TokenType get_operator_token(const std::string &full_operator) {
+		if (full_operator.length() == 1) {
+			return match_one_character_operator(full_operator.at(0));
+		}
+
+		return match_two_character_operator(full_operator);
+	}
+
+	private:
+	std::string get_operator_string(const char &first_operator, int &i) {
+		if (i >= file_literal.length() - 1) {
+			return std::string(1, first_operator);
+		}
+		
+		i += 1;
+		char second_operator = get_letter(i);
+		if (!is_operator(second_operator)) {
+			i -= 1;
+			return std::string(1, first_operator);
+		}
+		
+		std::string return_operator(1, first_operator);
+		return_operator += second_operator;
+
+		return return_operator;
+	}
+
 	public:
 	void lexical_analysis(const std::string &file_path) {
 		load_file(file_path); // If throws do nothing the  
@@ -137,7 +207,8 @@ class Lexer {
 			}
 
 			if (is_operator(first_letter)) {
-				tokens.push_back(tokenize(std::string(1, first_letter), TokenType::Operator));
+				std::string operator_string = get_operator_string(first_letter, i);
+				tokens.push_back(tokenize(operator_string, get_operator_token(operator_string)));
 				continue;
 			}
 			

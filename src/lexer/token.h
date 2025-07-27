@@ -6,7 +6,23 @@ enum class TokenType {
 	None,
 	Type,
 	Number, 
-	Operator,
+	
+	// Single character operators
+	Plus,
+	Minus,
+	Times,
+	Divide, 
+	EqualSign,
+	Lesser,
+	Greater,
+	OpenParentheses,
+	CloseParentheses,
+
+	// Two character operators
+	IsEqualTo, 
+	LesserEqual,
+	GreaterEqual,
+
 	Identifier,
 	KeyWord,
 	EOW, // end of word 
@@ -38,8 +54,41 @@ struct Token {
 			case TokenType::Number:
 				std::cout << "Number ";
 				break;
-			case TokenType::Operator:
-				std::cout << "Operator ";
+			case TokenType::Plus:
+				std::cout << "Plus ";
+				break;
+			case TokenType::Minus:
+				std::cout << "Minus ";
+				break;
+			case TokenType::Times:
+				std::cout << "Times ";
+				break;
+			case TokenType::Divide:
+				std::cout << "Divide ";
+				break;
+			case TokenType::CloseParentheses:
+				std::cout << "Close P ";
+				break;
+			case TokenType::OpenParentheses:
+				std::cout << "Open P ";
+				break;
+			case TokenType::Greater:
+				std::cout << "Greater ";
+				break;
+			case TokenType::Lesser:
+				std::cout << "Lesser ";
+				break;
+			case TokenType::LesserEqual:
+				std::cout << "Lesser E ";
+				break;
+			case TokenType::GreaterEqual:
+				std::cout << "Greater E ";
+				break;
+			case TokenType::IsEqualTo:
+				std::cout << "Is Equal To ";
+				break;
+			case TokenType::EqualSign:
+				std::cout << "Equal Sign ";
 				break;
 			case TokenType::EOW:
 				std::cout << "EOW ";
