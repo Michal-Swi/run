@@ -22,13 +22,14 @@ class Lexer {
 	public:
 	Lexer() {
 		operators = {'+', '-', '*', '/', 
-							'<', '>', '=', '(', ')'};
+							'<', '>', '=', '(', ')', '!'};
 
 		key_words = {"let", "if", "for", "fn"}; 
 		
 		two_character_operators[">="] = TokenType::GreaterEqual;
 		two_character_operators["<="] = TokenType::LesserEqual;
 		two_character_operators["=="] = TokenType::IsEqualTo;
+		two_character_operators["!="] = TokenType::IsDifferentFrom;
 	}
 
 	private:
@@ -148,6 +149,8 @@ class Lexer {
 				return TokenType::OpenParentheses;
 			case ')':
 				return TokenType::CloseParentheses;
+			case '!':
+				return TokenType::Not;
 		}
 		
 		std::string error(1, ch);
@@ -236,6 +239,8 @@ class Lexer {
 				continue;
 			}
 		}
+
+		throw bad_token();
 	}
 
 	public:

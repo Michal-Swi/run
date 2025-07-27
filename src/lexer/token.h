@@ -17,11 +17,13 @@ enum class TokenType {
 	Greater,
 	OpenParentheses,
 	CloseParentheses,
+	Not,
 
 	// Two character operators
 	IsEqualTo, 
 	LesserEqual,
 	GreaterEqual,
+	IsDifferentFrom,
 
 	Identifier,
 	KeyWord,
@@ -92,6 +94,12 @@ struct Token {
 				break;
 			case TokenType::EOW:
 				std::cout << "EOW ";
+				break;
+			case TokenType::IsDifferentFrom:
+				std::cout << "Is Different From ";
+				break;
+			case TokenType::Not:
+				std::cout << "Not ";
 				break;
 			default:
 				std::cout << "None ";
