@@ -1,0 +1,17 @@
+Put errors in directories that match the place 
+they could be thrown e.g. NoFile error won't be
+thrown anywhere other than lexer, so it's place
+is in the lexer_errors/ dir
+
+Errors should be constructed like so:
+
+inline constexpr const char* TemplateError = "TemplateError ";
+inline constexpr const char* TemplateErrorSpecification = "Specification"
+
+class template_error : public std::exception {
+	public:
+	const char* what() const noexcept override {
+		return "";
+	}
+};
+
