@@ -8,7 +8,9 @@
 #include <string>
 #include <vector>
 #include "token.h"
-#include "../errors/errors.h"
+#include "../errors/lexer_errors/file_erorrs.h"
+#include "../errors/lexer_errors/bad_token_erorrs.h"
+#include "../errors/lexer_errors/internal_lexer_erorrs.h"
 
 class Lexer {
 	private:
