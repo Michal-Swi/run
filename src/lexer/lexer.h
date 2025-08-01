@@ -8,9 +8,9 @@
 #include <string>
 #include <vector>
 #include "token.h"
-#include "../errors/lexer_errors/file_erorrs.h"
-#include "../errors/lexer_errors/bad_token_erorrs.h"
-#include "../errors/lexer_errors/internal_lexer_erorrs.h"
+#include "../errors/lexer_errors/file_errors.h"
+#include "../errors/lexer_errors/bad_token_errors.h"
+#include "../errors/lexer_errors/internal_lexer_errors.h"
 
 class Lexer {
 	private:
@@ -240,9 +240,9 @@ class Lexer {
 				tokens.push_back(tokenize(word, TokenType::Number));
 				continue;
 			}
-		}
 
-		throw bad_token();
+			throw bad_token();
+		}
 	}
 
 	public:
