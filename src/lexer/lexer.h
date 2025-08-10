@@ -20,6 +20,7 @@ class Lexer {
 	std::unordered_set<char> operators;
 	std::unordered_set<std::string> key_words;
 	std::unordered_map<std::string, TokenType> two_character_operators;
+	std::unordered_map<std::string, TokenType> word_operators;
 
 	public:
 	Lexer() {
@@ -32,6 +33,12 @@ class Lexer {
 		two_character_operators["<="] = TokenType::LesserEqual;
 		two_character_operators["=="] = TokenType::IsEqualTo;
 		two_character_operators["!="] = TokenType::IsDifferentFrom;
+		two_character_operators["&&"] = TokenType::And;
+		two_character_operators["||"] = TokenType::Or;
+
+		word_operators["and"] = TokenType::And;
+		word_operators["or"] = TokenType::Or;
+		word_operators["not"] = TokenType::Not;
 	}
 
 	private:
@@ -99,6 +106,16 @@ class Lexer {
 	private:
 	bool is_keyword(const std::string &word) {
 		return key_words.find(word) != key_words.end();
+	}
+
+	private:
+	bool is_word_operator(const std::string &word) {
+		return word_operators.find(word) != word_operators.end();
+	}
+	
+	private:
+	TokenType get_word_operator_token_type(const std::string &word) {
+		return word_operators[word];
 	}
 
 	private:
@@ -202,6 +219,8 @@ class Lexer {
 		load_file(file_path); // If throws do nothing the  
 							  // program should and will terminate
 		
+		std::cout << file_literal << std::endl;
+
 		std::string word;
 		int i = 0;
 		for (; i < file_literal.length(); i++) {
@@ -228,6 +247,8 @@ class Lexer {
 				// That's fuckin ugly, change that later
 				if (is_keyword(word)) {
 					tokens.push_back(tokenize(word, TokenType::KeyWord));		
+				} else if (is_word_operator(word)) {  
+					tokens.push_back(tokenize(word, get_word_operator_token_type(word)));
 				} else {
 					tokens.push_back(tokenize(word, TokenType::Identifier));
 				}

@@ -18,6 +18,8 @@ enum class TokenType {
 	OpenParentheses,
 	CloseParentheses,
 	Not,
+	And,
+	Or,
 
 	// Two character operators
 	IsEqualTo, 
@@ -32,7 +34,7 @@ enum class TokenType {
 
 struct Token {
 	TokenType token_type;
-	std::string token_literal;
+	std::string_view token_literal;
 
 	Token(const TokenType &token_type, const std::string &token_literal) : 
 		token_type(token_type), token_literal(token_literal)
@@ -100,6 +102,12 @@ struct Token {
 				break;
 			case TokenType::Not:
 				std::cout << "Not ";
+				break;
+			case TokenType::And:
+				std::cout << "And ";
+				break;
+			case TokenType::Or:
+				std::cout << "Or ";
 				break;
 			default:
 				std::cout << "None ";
