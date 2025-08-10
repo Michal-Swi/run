@@ -36,8 +36,17 @@ struct Token {
 	TokenType token_type;
 	std::string_view token_literal;
 
+	bool is_operator; // Ik that this is dumb, but I can't think 
+					  // of a better way my bad 
+	
+	public:
 	Token(const TokenType &token_type, const std::string &token_literal) : 
-		token_type(token_type), token_literal(token_literal)
+		token_type(token_type), token_literal(token_literal), is_operator(false)
+	{}
+
+	public:
+	Token(const TokenType &token_type, const std::string &token_literal, const bool &is_operator) : 
+		token_type(token_type), token_literal(token_literal), is_operator(is_operator)
 	{}
 
 	public:

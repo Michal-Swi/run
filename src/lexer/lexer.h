@@ -63,6 +63,12 @@ class Lexer {
 	Token tokenize(const std::string &literal, const TokenType &token_type) {
 		Token token(token_type, literal);
 		return token;
+	}	
+
+	private:
+	Token tokenize(const std::string &literal, const TokenType &token_type, const bool &&is_operator) {
+		Token token(token_type, literal, is_operator);
+		return token;
 	}
 
 	private:
@@ -232,7 +238,7 @@ class Lexer {
 
 			if (is_operator(first_letter)) {
 				std::string operator_string = get_operator_string(first_letter, i);
-				tokens.push_back(tokenize(operator_string, get_operator_token(operator_string)));
+				tokens.push_back(tokenize(operator_string, get_operator_token(operator_string), true));
 				continue;
 			}
 			
@@ -248,7 +254,7 @@ class Lexer {
 				if (is_keyword(word)) {
 					tokens.push_back(tokenize(word, TokenType::KeyWord));		
 				} else if (is_word_operator(word)) {  
-					tokens.push_back(tokenize(word, get_word_operator_token_type(word)));
+					tokens.push_back(tokenize(word, get_word_operator_token_type(word), true));
 				} else {
 					tokens.push_back(tokenize(word, TokenType::Identifier));
 				}
